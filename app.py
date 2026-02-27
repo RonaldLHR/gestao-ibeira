@@ -32,17 +32,18 @@ Base.metadata.create_all(engine)
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
 
-# --- 2. CONFIGURACIÓN DE LA PÁGINA Y ESTILO ---
-st.set_page_config(page_title="gcformacion", layout="wide", page_icon="📋")
-
 st.markdown("""
     <style>
-    /* Ocultar menús nativos y pie de página de Streamlit */
+    /* Esconder o botão 'Hosted with Streamlit', o avatar do usuário e o menu de opções */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Estilo general */
+    /* Remove especificamente o botão flutuante do Streamlit Cloud no canto inferior direito */
+    .viewerBadge_container__1QSob {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    
+    /* Estilo general para combinar con la imagen */
     .main { background-color: #f5f7f9; }
     .stButton>button { width: 100%; }
     </style>
