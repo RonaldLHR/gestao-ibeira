@@ -8,9 +8,7 @@ from datetime import date
 # --- 1. CONFIGURACIÓN DE LA BASE DE DATOS ---
 @st.cache_resource
 def get_engine():
-    # He actualizado el nombre del archivo a 'gestion_ibeira.db' 
-    # para evitar el error de columnas faltantes de la versión anterior.
-    return create_engine('sqlite:///gestion_ibeira.db', connect_args={"check_same_thread": False})
+    return create_engine('sqlite:///gestao_cursos.db', connect_args={"check_same_thread": False})
 
 engine = get_engine()
 Base = declarative_base()
@@ -21,29 +19,22 @@ class Solicitacao(Base):
     cliente = Column(String)
     solicitante = Column(String)
     curso = Column(String)
-    modalidad = Column(String)
+    modalidad = Column(String) #
     horas = Column(Integer)
-    fecha_inicio = Column(Date)
-    fecha_fin = Column(Date)
-    coordinadora = Column(String)
-    estado = Column(String)
+    fecha_inicio = Column(Date) #
+    fecha_fin = Column(Date)    #
+    coordinadora = Column(String) #
+    estado = Column(String) #
 
 Base.metadata.create_all(engine)
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
 
+# --- 2. CONFIGURACIÓN DE LA PÁGINA ---
+st.set_page_config(page_title="gcformacion", layout="wide", page_icon="📋")
+
 st.markdown("""
     <style>
-    /* Esconder o botão 'Hosted with Streamlit', o avatar do usuário e o menu de opções */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Remove especificamente o botão flutuante do Streamlit Cloud no canto inferior direito */
-    .viewerBadge_container__1QSob {display: none !important;}
-    .stAppDeployButton {display: none !important;}
-    
-    /* Estilo general para combinar con la imagen */
     .main { background-color: #f5f7f9; }
     .stButton>button { width: 100%; }
     </style>
@@ -59,6 +50,7 @@ with st.sidebar:
         f_solicitante = st.text_input("Solicitante")
         f_curso = st.text_input("Curso")
         
+        # Opciones según la imagen
         f_modalidad = st.selectbox("Modalidad", [
             "Teleformación", "Presencial", "Presencial Aula Virtual", "Mixta", "Mixta Aula Virtual"
         ])
@@ -67,10 +59,12 @@ with st.sidebar:
         f_fecha_ini = st.date_input("Fecha Inicio", value=date.today())
         f_fecha_fin = st.date_input("Fecha Fin", value=date.today())
         
+        # Coordinadoras según la imagen
         f_coordinadora = st.selectbox("Coordinadora", [
             "Cristina Rodríguez", "Cristina Navas", "Yolanda Sedeño"
         ])
         
+        # Estados según la imagen
         f_estado = st.selectbox("Estado", [
             "Recepcionada", "En Gestión Inicial", "En Marcha", "Realizada"
         ])
