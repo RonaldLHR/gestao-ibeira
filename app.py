@@ -31,7 +31,7 @@ session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
 
 # --- 2. CONFIGURACIÓN DE LA PÁGINA ---
-st.set_page_config(page_title="Gestión Ibeira", layout="wide", page_icon="📋")
+st.set_page_config(page_title="gcformacion", layout="wide", page_icon="📋")
 
 st.markdown("""
     <style>
